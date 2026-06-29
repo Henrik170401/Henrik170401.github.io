@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="Icon-bright_red.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <title>PadelTorero</title>
+  <style>
+    /* ---- Hero v2 ---- */
+    .hero-glow-2 {
+      position: absolute;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(229,32,56,0.08) 0%, transparent 70%);
+      bottom: -100px; left: -80px;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: clamp(3.2rem, 7.5vw, 6.5rem);
+      letter-spacing: -2px;
+    }
+    .hero h1 em {
+      background: linear-gradient(135deg, #E52038 0%, #ff6b7a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ---- Marquee ---- */
+    .marquee-wrap {
+      background: var(--red);
+      overflow: hidden;
+      padding: 0.8rem 0;
+    }
+    .marquee-inner {
+      display: flex;
+      animation: marqueeScroll 28s linear infinite;
+      width: max-content;
+    }
+    .marquee-inner:hover { animation-play-state: paused; }
+    .marquee-item {
+      padding: 0 2.5rem;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.92); white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .marquee-sep { color: rgba(255,255,255,0.3); padding: 0 0.5rem; }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ---- Bento Grid ---- */
+    .bento-outer {
+      padding: 5rem 8rem;
+      max-width: 1800px; margin: 0 auto;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 1rem;
+    }
+    .bento-card {
+      border-radius: 18px;
+      padding: 2.5rem;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      min-height: 260px;
+    }
+    .bento-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+    }
+    .bento-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 80% 20%, rgba(229,32,56,0.12) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .bento-card:hover::before { opacity: 1; }
+
+    .bc-anlage   { grid-column: span 7; background: rgba(229,32,56,0.07); border: 1px solid rgba(229,32,56,0.22); }
+    .bc-community{ grid-column: span 5; background: rgba(245,238,239,0.04); border: 1px solid rgba(245,238,239,0.1); }
+    .bc-academy  { grid-column: span 5; background: rgba(229,32,56,0.05); border: 1px solid rgba(229,32,56,0.15); }
+    .bc-partner  { grid-column: span 4; background: rgba(245,238,239,0.03); border: 1px solid rgba(245,238,239,0.08); }
+    .bc-tengo    { grid-column: span 3; background: rgba(245,238,239,0.04); border: 1px solid rgba(245,238,239,0.1); }
+
+    .bento-tag   { font-size: 0.68rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem; }
+    .bento-title { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 900; color: var(--cream); line-height: 1.1; margin-bottom: 0.75rem; flex: 1; }
+    .bento-title em { color: var(--red); font-style: normal; }
+    .bento-desc  { font-size: 1.25rem; color: rgba(245,238,239,0.45); line-height: 1.7; margin-bottom: 1.25rem; }
+    .bento-num   {
+      position: absolute; bottom: -0.5rem; right: 1rem;
+      font-size: clamp(5rem, 9vw, 9rem); font-weight: 900; line-height: 1;
+      color: rgba(229,32,56,0.08); pointer-events: none; -webkit-user-select: none; user-select: none;
+    }
+    .bento-arrow {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--red); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; align-self: flex-start;
+      transition: transform 0.2s;
+    }
+    .bento-card:hover .bento-arrow { transform: translateX(4px); }
+
+    @media (max-width: 1000px) {
+      .bento-outer { padding: 3rem 2rem; }
+      .bc-anlage, .bc-community, .bc-academy, .bc-partner, .bc-tengo { grid-column: span 12; min-height: 200px; }
+    }
+
+    /* ---- Special section ---- */
+    .special-wrap {
+      padding: 4rem 8rem;
+      max-width: 1800px; margin: 0 auto;
+    }
+    .special-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem;
+    }
+    @media (max-width: 900px) { .special-wrap { padding: 3rem 1.5rem; } }
+
+    /* ---- Founder section ---- */
+    .founder-wrap {
+      display: grid; grid-template-columns: 1fr 420px;
+      gap: 5rem; align-items: center;
+    }
+    .founder-quote {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--cream); margin: 1.5rem 0 0.5rem;
+    }
+    .founder-quote em { color: var(--red); font-style: normal; }
+    .founder-img {
+      width: 100%; aspect-ratio: 1;
+      object-fit: cover; border-radius: 24px;
+      border: 2px solid rgba(229,32,56,0.2);
+      box-shadow: 0 0 60px rgba(229,32,56,0.12);
+    }
+    @media (max-width: 900px) {
+      .founder-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .founder-img { max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+   <div class="nav-logo">
+      <a href="index.html">
+        <div class="logo-anim-wrap">
+          <div class="logo-anim">
+            <img src="Horizontal-Logo-color-dark_red-backlground.png" alt="PadelTorero Logo" class="logo-img">
+          </div>
+        </div>
+      </a>
+    </div>
+    
+  
+  <div class="nav-social">
+    <a href="https://www.instagram.com/padeltorero/" target="_blank" rel="noopener" class="social-link instagram">
+      <img src="R (2).png" alt="Instagram">
+    </a>
+    <a href="https://chat.whatsapp.com/BJKgiyvqgvz7YOolKm7OW9?mode=gi_t" target="_blank" rel="noopener" class="social-link whatsapp">
+      <img src="image.png" alt="WhatsApp">
+    </a>
+  </div>
+  <div class="nav-links">    <a class="nav-link" href="anlage.html">Die Anlage</a>
+    
+    <a class="nav-link" href="community.html">Community</a>
+    <div class="nav-dropdown"><button class="nav-link nav-dropdown-toggle" onclick="toggleDropdown(this)">Padel Academy</button><div class="nav-dropdown-menu"><a href="trainer.html" class="nav-dropdown-tile"><span class="nav-dropdown-tile-title">Padel Academy</span><span class="nav-dropdown-tile-sub">Kurse &amp; Buchung</span></a><a href="chema.html" class="nav-dropdown-tile"><span class="nav-dropdown-tile-title">Chema Moreno</span><span class="nav-dropdown-tile-sub">Trainer-Profil</span></a></div></div>
+    <a class="nav-link" href="partner.html">Partner werden</a>
+    <a class="nav-link cta" href="https://playtomic.io/tenant/6189d337-d630-4ed4-b8b2-46119f995682?utm_source=app_ios&utm_campaign=share" target="_blank" rel="noopener">Buchung</a>
+  </div>
+  <div class="burger-menu" onclick="toggleMenu()">
+    <div class="burger-line"></div>
+    <div class="burger-line"></div>
+    <div class="burger-line"></div>
+  </div>
+</nav>
+
+<div id="page-home" class="page visible">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero-tag"><div class="dot"></div>Jetzt buchbar · Grefrath</div>
+    <h1>Padel für Alle.<br/><em>Jetzt in Grefrath.</em></h1>
+    <p class="hero-sub">Drei Outdoor-Courts und eine lebendige Community – direkt neben Tengo Sport in Grefrath.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+      <a href="https://playtomic.io/tenant/6189d337-d630-4ed4-b8b2-46119f995682?utm_source=app_ios&utm_campaign=share" target="_blank" rel="noopener" class="btn btn-r">Platz buchen</a>
+      <a href="trainer.html" class="btn btn-o">Trainerstunden</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">3</div><div class="stat-l">Outdoor Courts</div></div>
+      <div><div class="stat-n">1</div><div class="stat-l">Torero Lounge</div></div>
+      <div><div class="stat-n">A</div><div class="stat-l">Lizenz Trainer</div></div>
+      <div><div class="stat-n">∞</div><div class="stat-l">Community</div></div>
+    </div>
+  </div>
+
+  <!-- BENTO GRID -->
+  <div style="background:var(--darker);">
+    <div class="bento-outer">
+      <div class="bento-grid" data-reveal>
+
+        <!-- Anlage -->
+        <a href="anlage.html" class="bento-card bc-anlage">
+          <div class="bento-tag">Die Anlage</div>
+          <div class="bento-title">2 Double Courts.<br>1 Single Court.<br><em>Torero Lounge.</em></div>
+          <div class="bento-desc">Kostenlose Schläger vor Ort · direkt neben Tengo Sport in Grefrath.</div>
+          <div class="bento-arrow">→</div>
+          <div class="bento-num">3</div>
+        </a>
+
+        <!-- Community -->
+        <a href="community.html" class="bento-card bc-community">
+          <div class="bento-tag">Community</div>
+          <div class="bento-title">Finde deine <em>Mitspieler.</em></div>
+          <div class="bento-desc">Werde Teil der wachsenden Padel-Community am Niederrhein.</div>
+          <div class="bento-arrow">→</div>
+          <div class="bento-num">∞</div>
+        </a>
+
+        <!-- Academy -->
+        <a href="trainer.html" class="bento-card bc-academy">
+          <div class="bento-tag">Chema Moreno · Padel Academy</div>
+          <div class="bento-title">Noch keine Gruppe? <em>Wir helfen dir.</em></div>
+          <div class="bento-desc">Die Online-Buchung ist geschlossen – aber wir organisieren noch Gruppen. Nachricht schicken und mitmachen.</div>
+          <div class="bento-arrow">→</div>
+          <div class="bento-num">A</div>
+        </a>
+
+        <!-- Partner -->
+        <a href="partner.html" class="bento-card bc-partner">
+          <div class="bento-tag">Sponsoring</div>
+          <div class="bento-title">Deine Marke. <em>Unser Court.</em></div>
+          <div class="bento-desc">5 Pakete. Für jedes Unternehmen das passende Modell.</div>
+          <div class="bento-arrow">→</div>
+        </a>
+
+        <!-- Tengo -->
+        <a href="https://www.tengo.de" target="_blank" rel="noopener" class="bento-card bc-tengo">
+          <div class="bento-tag">Direkt nebenan</div>
+          <div class="bento-title"><em>Tengo Sport.</em></div>
+          <div class="bento-desc">700 m² Store – Schläger, Bälle, Sportswear.</div>
+          <img src="Tengo_Logo_10cm_Dezember_neuropol_rechts.pdf.png" alt="Tengo" style="max-width:120px;opacity:0.6;margin-top:auto;padding-top:1rem;">
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUNDER -->
+  <div style="background:var(--dark);">
+    <div class="section-wrap">
+      <div class="founder-wrap">
+        <div data-reveal="left">
+          <span class="stag">Über PadelTorero</span>
+          <div class="founder-quote">"Padel ist mehr als<br>nur ein <em>Sport.</em>"</div>
+          <p style="font-size:1.1rem;color:rgba(245,238,239,0.5);margin:0.5rem 0 2rem;">Niklas Ingenpass – Founder PadelTorero</p>
+          <div class="tag-grid">
+            <div class="tag-card"><span>Mindset</span>Lifestyle</div>
+            <div class="tag-card"><span>Ursprung</span>Leidenschaft</div>
+            <div class="tag-card"><span>Gründer</span>Profihandballer</div>
+            <div class="tag-card"><span>Werte</span>Community</div>
+          </div>
+        </div>
+        <div data-reveal="right">
+          <img src="image-768x768.jpg" alt="Niklas Ingenpass – Founder PadelTorero" class="founder-img">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTNER -->
+  <div style="background:var(--darker);">
+    <div class="section-wrap" style="padding-bottom:2rem;">
+      <span class="stag" data-reveal>Premium Partner</span>
+      <h2 data-reveal data-delay="1">Unsere <em>Partner.</em></h2>
+    </div>
+    <div class="partner-track-wrap">
+      <div class="partner-track">
+        <div class="partner-logo-card"><a href="https://www.tengo.de" target="_blank" rel="noopener"><img src="Tengo_Logo_10cm_Dezember_neuropol_rechts.pdf.png" alt="Tengo"></a></div>
+        <div class="partner-logo-card"><a href="https://www.glaudo-fliesen.de" target="_blank" rel="noopener"><img src="Florian Glaudo 2024-04-24 Logo JPEG (1).jpg" alt="Florian Glaudo"></a></div>
+        <div class="partner-logo-card"><a href="https://www.icg-ing.de" target="_blank" rel="noopener"><img src="ICG.png" alt="ICG"></a></div>
+        <div class="partner-logo-card"><a href="https://www.brinkmann-dataware.de" target="_blank" rel="noopener"><img src="Logo svg ohne hintergrund (1).svg" alt="Brinkmann Dataware"></a></div>
+        <div class="partner-logo-card"><a href="https://www.tengo.de" target="_blank" rel="noopener"><img src="Tengo_Logo_10cm_Dezember_neuropol_rechts.pdf.png" alt="Tengo"></a></div>
+        <div class="partner-logo-card"><a href="https://www.glaudo-fliesen.de" target="_blank" rel="noopener"><img src="Florian Glaudo 2024-04-24 Logo JPEG (1).jpg" alt="Florian Glaudo"></a></div>
+        <div class="partner-logo-card"><a href="https://www.icg-ing.de" target="_blank" rel="noopener"><img src="ICG.png" alt="ICG"></a></div>
+        <div class="partner-logo-card"><a href="https://www.brinkmann-dataware.de" target="_blank" rel="noopener"><img src="Logo svg ohne hintergrund (1).svg" alt="Brinkmann Dataware"></a></div>
+        <div class="partner-logo-card"><a href="https://www.tengo.de" target="_blank" rel="noopener"><img src="Tengo_Logo_10cm_Dezember_neuropol_rechts.pdf.png" alt="Tengo"></a></div>
+        <div class="partner-logo-card"><a href="https://www.glaudo-fliesen.de" target="_blank" rel="noopener"><img src="Florian Glaudo 2024-04-24 Logo JPEG (1).jpg" alt="Florian Glaudo"></a></div>
+        <div class="partner-logo-card"><a href="https://www.icg-ing.de" target="_blank" rel="noopener"><img src="ICG.png" alt="ICG"></a></div>
+        <div class="partner-logo-card"><a href="https://www.brinkmann-dataware.de" target="_blank" rel="noopener"><img src="Logo svg ohne hintergrund (1).svg" alt="Brinkmann Dataware"></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div style="background:var(--dark);">
+    <div class="section-wrap">
+      <span class="stag" data-reveal>Anreise</span>
+      <h2 data-reveal data-delay="1">So findest du uns <em>in Grefrath.</em></h2>
+      <div class="split2" style="margin-top:2rem;">
+        <div data-reveal="left" data-delay="2">
+          <p style="font-size:1.15rem;color:rgba(245,238,239,0.6);line-height:1.8;margin-bottom:1.5rem;">
+            Direkt neben Tengo Sport in Grefrath – bequem per Auto erreichbar. Kostenlose Parkplätze direkt vor Ort.
+          </p>
+        </div>
+        <div class="map-box" data-reveal="right" data-delay="3">
+          <iframe src="https://www.google.com/maps?q=Industriestra%C3%9Fe+11,+47929+Grefrath&output=embed"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            title="Karte von PadelTorero Standort"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="foot-logo-wrap">
+          <img src="Icon-bright_red.png" alt="PadelTorero Logo" class="logo-img">
+          <span class="foot-brand-name">PadelTorero</span>
+        </div>
+        <p class="foot-brand-sub">Industriestraße 11 · 47929 Grefrath<br>Der Padel-Treffpunkt in der Region.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/padeltorero/" target="_blank" rel="noopener" class="social-link instagram">
+            <img src="R (2).png" alt="Instagram">
+          </a>
+          <a href="https://chat.whatsapp.com/BJKgiyvqgvz7YOolKm7OW9?mode=gi_t" target="_blank" rel="noopener" class="social-link whatsapp">
+            <img src="image.png" alt="WhatsApp">
+          </a>
+        </div>
+      </div>
+            <div class="footer-col">
+        <span class="footer-col-label">Navigation</span>
+        <a href="anlage.html">Anlage</a>
+        <a href="anlage.html#event-location">Event Location</a>
+        <a href="community.html">Community</a>
+        <a href="trainer.html">Padel Academy</a>
+        <a href="partner.html">Partner werden</a>
+        <a href="https://playtomic.io/tenant/6189d337-d630-4ed4-b8b2-46119f995682?utm_source=app_ios&utm_campaign=share" target="_blank" rel="noopener">Buchung</a>
+        <a href="impressum.html#kontakt">Kontakt</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-label">Rechtliches</span>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 PadelTorero. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+</div>
+
+
+
+
+
+    </div>
+  
+</div>
+<script>
+  function toggleDropdown(btn) {
+    var dd = btn.closest(".nav-dropdown");
+    dd.classList.toggle("open");
+    document.addEventListener("click", function close(e) {
+      if (!dd.contains(e.target)) { dd.classList.remove("open"); document.removeEventListener("click", close); }
+    });
+  }
+
+    function showPage(page) {
+      // Hide all pages
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.classList.remove('visible'));
+      // Show the selected page
+      const selectedPage = document.getElementById('page-' + page);
+      if (selectedPage) {
+        selectedPage.classList.add('visible');
+      }
+      // Update nav active
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(l => l.classList.remove('active'));
+      const navLink = document.getElementById('nav-' + page);
+      if (navLink) {
+        navLink.classList.add('active');
+      }
+    }
+
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+  </script>
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 14V4M4 9l5-5 5 5" stroke="#F5EEEF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+</body>
+</html>
+
